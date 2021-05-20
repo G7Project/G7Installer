@@ -71,8 +71,17 @@ echo 'Please set the root password.'
 passwd
 echo 'Installing GRUB...'
 pacstrap /mnt grub efibootmgr --noconfirm
-pacman -S grub efibootmgr git --noconfirm
+pacman -S grub efibootmgr git --noconfirm # Just in case ;) P.S. git is needed to setup G7OS part
 mkdir /mnt/boot/efi
 mount $efi /boot/efi
 grub-install --target=x86_64-efi --bootloader-id=G7OS --efi-directory=/mnt/boot/efi
 grub-mkconfig -o /mnt/boot/grub/grub.cfg
+echo 'Installing G7Frontend (Main)...'
+cd /mnt/
+mkdir g7os
+cd g7os
+git clone https://github.com/G7-Project/G7Frontend.git
+chmod +x install.sh
+./install.sh
+cd /
+echo 'G7OS has been installed on your computer!'
